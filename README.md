@@ -15,7 +15,7 @@
 
 ## インストール
 **GitHub**  
-[![インストールボタン](/images/install_button.png "アドオンをインストール")](https://github.com/akoya-tomo/futaba_image_save_button/releases/download/v1.0.0/futaba_image_save_button-1.0.0-an.fx.xpi)
+[![インストールボタン](/images/install_button.png "アドオンをインストール")](https://github.com/akoya-tomo/koshian_image_save_button/releases/download/v1.0.0/koshian_image_save_button-1.0.0-an.fx.xpi)
 
 ※「接続エラーのため、アドオンをダウンロードできませんでした。」と表示されてインストール出来ないときはリンクを右クリックしてxpiファイルをダウンロードし、メニューのツール→アドオン（またはCtrl+Shift+A）で表示されたアドオンマネージャーのページにxpiファイルをドラッグ＆ドロップして下さい。  
 
