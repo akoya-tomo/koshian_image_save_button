@@ -1,0 +1,9 @@
+{
+  "addons": {
+    "koshian_image_save_button@akoya-tomo.github.io": {
+      "updates": [
+        { "version": "1.0.0", "update_link": "https://github.com/akoya-tomo/koshian_image_save_button/releases/download/v1.0.0/koshian_image_save_button-1.0.0-an.fx.xpi" }
+      ]
+    }
+  }
+}
