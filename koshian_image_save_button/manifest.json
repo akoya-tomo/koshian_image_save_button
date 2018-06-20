@@ -1,0 +1,39 @@
+{
+    "manifest_version":2,
+
+    "name":"KOSHIAN 画像保存ボタン",
+
+    "version":"1.0.0",
+
+    "applications": {
+        "gecko": {
+            "id": "koshian_image_save_button@akoya-tomo.github.io",
+            "update_url": "https://raw.githubusercontent.com/akoya-tomo/koshian_image_save_button/master/updates.json"
+        }
+    },
+
+    "description":"画像ファイル名の横に保存ボタンを追加します",
+
+    "icons":{
+        "48":"icons/icon-48.png"
+    },
+
+    "author": "akoya_tomo",
+
+    "homepage_url": "https://github.com/akoya-tomo/koshian_image_save_button/",
+
+    "content_scripts":[
+        {
+            "matches":["*://*.2chan.net/*/res/*","*://kako.futakuro.com/futa/*_b/*"],
+            "js":["res.js"]
+        }
+    ],
+    
+    "permissions":[
+        "storage"
+    ],
+
+    "options_ui":{
+        "page":"options.html"
+    }
+}
