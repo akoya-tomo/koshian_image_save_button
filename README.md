@@ -24,6 +24,7 @@
   [Save In…](https://addons.mozilla.org/en-US/firefox/addon/save-in/)アドオンで「Enable saving of links. Prefers sources if available.」を有効の状態で保存ボタンを右クリックしてフォルダ選択することで、「フォルダを選択して直接保存」に近い動作になります。  
 ![スクリーンショット](/images/screenshot02.png "スクリーンショット")
 * 塩などの外部リンクはFirefoxの仕様でダウンロードリンクが機能しないため、保存ボタンは追加しません。  
+* 設定の変更を開いているレス送信モードのページに反映するには一度ページを更新してください。  
 
 ## 今後の予定
 * タブを閉じても保存済みファイルを記憶保持したい。  
