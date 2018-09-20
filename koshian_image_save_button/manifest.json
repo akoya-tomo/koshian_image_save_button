@@ -3,7 +3,7 @@
 
     "name":"KOSHIAN 画像保存ボタン",
 
-    "version":"1.0.0",
+    "version":"1.0.1",
 
     "applications": {
         "gecko": {
