@@ -140,9 +140,34 @@ function main(){
         document.addEventListener("KOSHIAN_reload", (e) => {
             process(last_process_num);
         });
+
+        status = "";
+        target = document.getElementById("akahuku_reload_status");
+        if (target) {
+            checkAkahukuReload();
+        } else {
+            document.addEventListener("AkahukuContentApplied", () => {
+                target = document.getElementById("akahuku_reload_status");
+                if (target) checkAkahukuReload();
+            });
+        }
     } else {
         //画像レス無し
         thre();
+    }
+
+    function checkAkahukuReload() {
+        let config = { childList: true };
+        let observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (target.textContent == status) return;
+                status = target.textContent;
+                if (status.indexOf("新着:") === 0) {
+                    process(last_process_num);
+                }
+            });
+        });
+        observer.observe(target, config);
     }
 }
 
