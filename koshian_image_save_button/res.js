@@ -1,14 +1,18 @@
 let use_save_button = true;
 let button_size = 10;
-let use_filename = false;
+let use_filename = false;   // eslint-disable-line no-unused-vars
 
 function switchSave(e){
     e.target.textContent = "[保存済]";
 }
 
+/**
+ * 保存ボタン設置
+ * @param {HTMLAnchorElement} anchor ファイル名のaタグ
+ */
 function putSaveButton(anchor){
     if (use_save_button) {
-        //保存ボタン追加
+        // 保存ボタン追加
         let btn = document.createElement("a");
         btn.className = "KOSHIAN_SaveButton";
         btn.href=anchor.href;
@@ -25,22 +29,25 @@ function putSaveButton(anchor){
         response.insertBefore(btn, anchor);
         response.insertBefore(space, anchor);
     } else {
-        //ファイル名クリックでダウンロード
+        // ファイル名クリックでダウンロード
         anchor.download = anchor.textContent;
     }
 }
 
+/**
+ * スレ画像のみ保存ボタン処理
+ *     添付ファイルが無い板用
+ */
 function thre(){
-    //スレ画像のみ処理
     let save_button = document.querySelector(".thre > .KOSHIAN_SaveButton");
-    //既存の[保存]ボタンがあればonclickを再登録
+    // 既存の[保存]ボタンがあればonclickを再登録
     if (save_button) {
         save_button.onclick = switchSave;
         save_button.oncontextmenu = switchSave;
         return; 
     }
 
-    let anchor = document.querySelector(".thre > a");   //スレ最初のaタグがファイル名と決め打ち
+    let anchor = document.querySelector(".thre > a");   // スレ最初のaタグがファイル名と決め打ち
     if (!anchor) return;
 
     if (/^\d+\.[0-9A-Za-z]+$/.test(anchor.textContent)) {
@@ -50,14 +57,17 @@ function thre(){
 
 let last_process_num = 0;
 
+/**
+ * 最初にスレを開いたときの保存ボタン処理
+ *     imgタグだけを抽出して処理時間短縮を図る
+ */
 function first_process(){
-    //最初にスレを開いたときの処理（imgタグだけを抽出して処理時間短縮を狙う）
     let thre = document.getElementsByClassName("thre")[0];
     if (!thre) return;
 
-    //let start_time = Date.now();  //処理時間計測開始（開発用）
+    //let start_time = Date.now();  // 処理時間計測開始（開発用）
 
-    //既存の[保存]ボタン削除
+    // 既存の[保存]ボタン削除
     let save_buttons = thre.getElementsByClassName("KOSHIAN_SaveButton");
     while (save_buttons.length) {
         save_buttons[0].remove();
@@ -66,7 +76,7 @@ function first_process(){
     let images = thre.getElementsByTagName("img");
 
     loop: for (let image of images) {
-        //imgタグの親要素の前方にあるaタグを検索
+        // imgタグの親要素の前方にあるaタグを検索
         for (let elm = image.parentElement.previousElementSibling; elm; elm = elm.previousElementSibling) {
             if (elm.tagName == "A" && /^\d+\.[0-9A-Za-z]+$/.test(elm.textContent)) {
                 putSaveButton(elm);
@@ -75,74 +85,103 @@ function first_process(){
         }
     }
 
-    //console.log("KOSHIAN_image_save_button/res.js: first_process() time = " + (Date.now() - start_time) + "msec");    //処理時間表示（開発用）
+    //console.log("KOSHIAN_image_save_button/res.js: first_process() time = " + (Date.now() - start_time) + "msec");    // 処理時間表示（開発用）
 
     last_process_num = document.getElementsByClassName("rtd").length;
 }
 
+/**
+ * リロードしたときの保存ボタン処理
+ * @param {number} beg 処理をするレスの開始番号
+ */
 function process(beg = 0){
-    //リロード処理
     let responses = document.getElementsByClassName("rtd");
     let end = responses.length;
 
     if (beg >= end) return;
 
-    //let start_time = Date.now();  //処理時間計測開始（開発用）
+    // let start_time = Date.now();  //処理時間計測開始（開発用）
 
     loop: for (let i = beg; i < end; ++i) {
-        //レス内のimgタグ抽出
+        // レス内のimgタグ抽出
         let images = responses[i].getElementsByTagName("img");
         let images_num = images.length;
         if (images_num) {
-            //既存の[保存]ボタンがあればonclickを再登録
-            let save_buttons = responses[i].getElementsByClassName("KOSHIAN_SaveButton");
-            if (save_buttons.length) {
-                save_buttons[0].onclick = switchSave;
-                save_buttons[0].oncontextmenu = switchSave;
+            // 既存の[保存]ボタンがあればonclickを再登録
+            let save_button = responses[i].getElementsByClassName("KOSHIAN_SaveButton")[0];
+            if (save_button) {
+                save_button.onclick = switchSave;
+                save_button.oncontextmenu = switchSave;
                 continue; 
             }
 
             let anchors = responses[i].getElementsByTagName("a");
             let anchors_num = anchors.length;
             if (anchors_num){
-                for (let j = anchors_num - (images_num * 2 - 1) - 1; j >= 0; --j) {  //imgタグの親のaタグとAutoLinkのaタグの分を除いて後方から検索
+                for (let j = anchors_num - (images_num * 2 - 1) - 1; j >= 0; --j) {  // imgタグの親のaタグとAutoLinkのaタグの分を除いて後方から検索
                     let a_text = anchors[j].textContent;
                     if (/^\d+\.[0-9A-Za-z]+$/.test(a_text)) {
                         putSaveButton(anchors[j]);
                         continue loop;
                     }
                 }
-                console.log("KOSHIAN_image_save_button/res.js: filename rapid search failed - res No." + (i + 1));
+                console.log("KOSHIAN_image_save_button/res.js: filename rapid search failed - res No." + (i + 1));  // eslint-disable-line no-console
 
-                //すっぽ抜け対策
-                for (let j = anchors_num - (images_num * 2 - 1); j < anchors_num; ++j) {  //残りのaタグを検索
+                // すっぽ抜け対策
+                for (let j = anchors_num - (images_num * 2 - 1); j < anchors_num; ++j) {  // 残りのaタグを検索
                     let a_text = anchors[j].textContent;
                     if (/^\d+\.[0-9A-Za-z]+$/.test(a_text)) {
                         putSaveButton(anchors[j]);
                         continue loop;
                     }
                 }
-                console.log("KOSHIAN_image_save_button/res.js: filename search failed - res No." + (i + 1));
+                console.log("KOSHIAN_image_save_button/res.js: filename search failed - res No." + (i + 1));    // eslint-disable-line no-console
             }
         }
     }
 
-    //console.log("KOSHIAN_image_save_button/res.js: process() time = " + (Date.now() - start_time) + "msec");  //処理時間表示（開発用）
+    //console.log("KOSHIAN_image_save_button/res.js: process() time = " + (Date.now() - start_time) + "msec");  // 処理時間表示（開発用）
 
     last_process_num = end;
 }
 
 function main(){
+    let status, target;
     if (document.querySelector("#ftbl input[name='upfile']")) {
-        //画像レス有り
+        // 画像レス有り
         first_process();
 
-        document.addEventListener("KOSHIAN_reload", (e) => {
+        document.addEventListener("KOSHIAN_reload", () => {
             process(last_process_num);
         });
+
+        status = "";
+        target = document.getElementById("akahuku_reload_status");
+        if (target) {
+            checkAkahukuReload();
+        } else {
+            document.addEventListener("AkahukuContentApplied", () => {
+                target = document.getElementById("akahuku_reload_status");
+                if (target) checkAkahukuReload();
+            });
+        }
     } else {
-        //画像レス無し
+        // 画像レス無し
         thre();
+    }
+
+    function checkAkahukuReload() {
+        let config = { childList: true };
+        let observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (target.textContent == status) return;
+                status = target.textContent;
+                if (status.indexOf("新着:") === 0) {
+                    process(last_process_num);
+                }
+            });
+        });
+        observer.observe(target, config);
     }
 }
 

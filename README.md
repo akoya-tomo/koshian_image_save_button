@@ -2,7 +2,7 @@
 このFirefoxアドオンはふたば☆ちゃんねるで画像（動画）を保存するボタンを追加します。  
 
 ※このアドオンはWebExtensionアドオン対応のFirefox専用となります。  
-※ふたば閲覧を支援する「こしあん」アドオン改変版やUserscriptは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。  
+※他のKOSHIAN改変版などのふたば閲覧支援ツールは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。  
 
 ## 機能
 * 画像を保存するボタンを追加する
@@ -15,7 +15,7 @@
 
 ## インストール
 **GitHub**  
-[![インストールボタン](/images/install_button.png "アドオンをインストール")](https://github.com/akoya-tomo/koshian_image_save_button/releases/download/v1.0.0/koshian_image_save_button-1.0.0-an.fx.xpi)
+[![インストールボタン](/images/install_button.png "アドオンをインストール")](https://github.com/akoya-tomo/koshian_image_save_button/releases/download/v1.0.1/koshian_image_save_button-1.0.1-an+fx.xpi)
 
 ※「接続エラーのため、アドオンをダウンロードできませんでした。」と表示されてインストール出来ないときはリンクを右クリックしてxpiファイルをダウンロードし、メニューのツール→アドオン（またはCtrl+Shift+A）で表示されたアドオンマネージャーのページにxpiファイルをドラッグ＆ドロップして下さい。  
 
@@ -24,11 +24,10 @@
   [Save In…](https://addons.mozilla.org/en-US/firefox/addon/save-in/)アドオンで「Enable saving of links. Prefers sources if available.」を有効の状態で保存ボタンを右クリックしてフォルダ選択することで、「フォルダを選択して直接保存」に近い動作になります。  
 ![スクリーンショット](/images/screenshot02.png "スクリーンショット")
 * 塩などの外部リンクはFirefoxの仕様でダウンロードリンクが機能しないため、保存ボタンは追加しません。  
-* 設定の変更を開いているレス送信モードのページに反映するには一度ページを更新してください。  
-
-## 今後の予定
-* タブを閉じても保存済みファイルを記憶保持したい。  
+* 設定の変更を開いているレス送信モードのページに反映するにはページを更新してください。  
 
 ## 更新履歴
+* v1.0.1 2018-09-21
+  - [赤福Extended](https://toshiakisp.github.io/akahuku-firefox-sp/)のリロードに対応
 * v1.0.0 2018-06-20
   - 新規リリース
