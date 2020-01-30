@@ -15,19 +15,14 @@ function putSaveButton(anchor){
         // 保存ボタン追加
         let btn = document.createElement("a");
         btn.className = "KOSHIAN_SaveButton";
-        btn.href=anchor.href;
-        btn.textContent="[保存]";
-        btn.style.fontSize = `${button_size}px`;
+        btn.href = anchor.href;
+        btn.textContent = "[保存]";
         btn.download = anchor.textContent;
         btn.onclick = switchSave;
         btn.oncontextmenu = switchSave;
 
-        let space = document.createElement("text");
-        space.textContent = " ";
-
         let response = anchor.parentNode;
-        response.insertBefore(btn, anchor);
-        response.insertBefore(space, anchor);
+        response.insertBefore(btn, anchor.nextSibling);
     } else {
         // ファイル名クリックでダウンロード
         anchor.download = anchor.textContent;
@@ -213,7 +208,8 @@ function main(){
 
 function onLoadSetting(result) {
     use_save_button = safeGetValue(result.use_save_button, true);
-    button_size = safeGetValue(result.button_size, 10);
+    //button_size = safeGetValue(result.button_size, 10);
+    document.documentElement.style.setProperty("--button-size", `${safeGetValue(result.button_size, 10)}px`);
     use_filename = safeGetValue(result.use_filename, false);
     
     main();
@@ -225,7 +221,8 @@ function onSettingChanged(changes, areaName) {
     }
 
     use_save_button = safeGetValue(changes.use_save_button.newValue, true);
-    button_size = safeGetValue(changes.button_size.newValue, 10);
+    //button_size = safeGetValue(changes.button_size.newValue, 10);
+    document.documentElement.style.setProperty("--button-size", `${safeGetValue(changes.button_size.newValue, 10)}px`);
     use_filename = safeGetValue(changes.use_filename.newValue, false);
 }
 
