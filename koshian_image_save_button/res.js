@@ -171,14 +171,14 @@ function main(){
     function checkAkahukuReload(target) {
         let status = "";
         let config = { childList: true };
-        let observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (target.textContent == status) return;
-                status = target.textContent;
-                if (status.indexOf("新着:") === 0) {
-                    process(last_process_num);
-                }
-            });
+        let observer = new MutationObserver(function() {
+            if (target.textContent == status) {
+                return;
+            }
+            status = target.textContent;
+            if (status.indexOf("新着:") === 0) {
+                process(last_process_num);
+            }
         });
         observer.observe(target, config);
     }
@@ -187,20 +187,17 @@ function main(){
         let status = "";
         let reloading = false;
         let config = { childList: true };
-        let observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (target.textContent == status) return;
-                status = target.textContent;
-                if (status == "・・・") {
-                    reloading = true;
-                } else
-                if (reloading && status.endsWith("頃消えます")) {
-                    process(last_process_num);
-                    reloading = false;
-                } else {
-                    reloading = false;
-                }
-            });
+        let observer = new MutationObserver(function() {
+            if (target.textContent == status) return;
+            status = target.textContent;
+            if (status == "・・・") {
+                reloading = true;
+            } else if (reloading && status.endsWith("頃消えます")) {
+                process(last_process_num);
+                reloading = false;
+            } else {
+                reloading = false;
+            }
         });
         observer.observe(target, config);
     }
