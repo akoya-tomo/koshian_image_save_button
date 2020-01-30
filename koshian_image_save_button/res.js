@@ -227,5 +227,5 @@ function safeGetValue(value, default_value) {
     return value === undefined ? default_value : value;
 }
 
-browser.storage.local.get().then(onLoadSetting, (err) => {});
+browser.storage.local.get().then(onLoadSetting, (err) => {});   // eslint-disable-line no-unused-vars
 browser.storage.onChanged.addListener(onSettingChanged);
