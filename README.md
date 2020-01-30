@@ -15,7 +15,7 @@
 
 ## インストール
 **GitHub**  
-[![インストールボタン](images/install_button.png "アドオンをインストール")](https://github.com/akoya-tomo/koshian_image_save_button/releases/download/v1.1.0/koshian_image_save_button-1.1.0-fx.xpi)
+[![インストールボタン](images/install_button.png "アドオンをインストール")](https://github.com/akoya-tomo/koshian_image_save_button/releases/download/v1.1.1/koshian_image_save_button-1.1.1-fx.xpi)
 
 ※「接続エラーのため、アドオンをダウンロードできませんでした。」と表示されてインストール出来ないときはリンクを右クリックしてxpiファイルをダウンロードし、メニューのツール→アドオン（またはCtrl+Shift+A）で表示されたアドオンマネージャーのページにxpiファイルをドラッグ＆ドロップして下さい。  
 
@@ -25,6 +25,8 @@
 * 設定を変更したら開いているレス送信モードのページを更新してください。  
 
 ## 更新履歴
+* v1.1.1 2020-01-30
+  - 保存ボタンの位置をファイル名の右に変更
 * v1.1.0 2019-05-09
   - ふたばのリロードの仕様変更に対応
 * v1.0.1 2018-09-21

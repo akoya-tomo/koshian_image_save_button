@@ -3,7 +3,7 @@
 
     "name":"KOSHIAN 画像保存ボタン",
 
-    "version":"1.1.0",
+    "version":"1.1.1",
 
     "applications": {
         "gecko": {
@@ -25,7 +25,8 @@
     "content_scripts":[
         {
             "matches":["*://*.2chan.net/*/res/*","*://kako.futakuro.com/futa/*_b/*"],
-            "js":["res.js"]
+            "js":["res.js"],
+            "css":["style.css"]
         }
     ],
     

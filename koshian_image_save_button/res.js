@@ -15,19 +15,14 @@ function putSaveButton(anchor){
         // 保存ボタン追加
         let btn = document.createElement("a");
         btn.className = "KOSHIAN_SaveButton";
-        btn.href=anchor.href;
-        btn.textContent="[保存]";
-        btn.style.fontSize = `${button_size}px`;
+        btn.href = anchor.href;
+        btn.textContent = "[保存]";
         btn.download = anchor.textContent;
         btn.onclick = switchSave;
         btn.oncontextmenu = switchSave;
 
-        let space = document.createElement("text");
-        space.textContent = " ";
-
         let response = anchor.parentNode;
-        response.insertBefore(btn, anchor);
-        response.insertBefore(space, anchor);
+        response.insertBefore(btn, anchor.nextSibling);
     } else {
         // ファイル名クリックでダウンロード
         anchor.download = anchor.textContent;
@@ -176,14 +171,14 @@ function main(){
     function checkAkahukuReload(target) {
         let status = "";
         let config = { childList: true };
-        let observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (target.textContent == status) return;
-                status = target.textContent;
-                if (status.indexOf("新着:") === 0) {
-                    process(last_process_num);
-                }
-            });
+        let observer = new MutationObserver(function() {
+            if (target.textContent == status) {
+                return;
+            }
+            status = target.textContent;
+            if (status.indexOf("新着:") === 0) {
+                process(last_process_num);
+            }
         });
         observer.observe(target, config);
     }
@@ -192,20 +187,17 @@ function main(){
         let status = "";
         let reloading = false;
         let config = { childList: true };
-        let observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (target.textContent == status) return;
-                status = target.textContent;
-                if (status == "・・・") {
-                    reloading = true;
-                } else
-                if (reloading && status.endsWith("頃消えます")) {
-                    process(last_process_num);
-                    reloading = false;
-                } else {
-                    reloading = false;
-                }
-            });
+        let observer = new MutationObserver(function() {
+            if (target.textContent == status) return;
+            status = target.textContent;
+            if (status == "・・・") {
+                reloading = true;
+            } else if (reloading && status.endsWith("頃消えます")) {
+                process(last_process_num);
+                reloading = false;
+            } else {
+                reloading = false;
+            }
         });
         observer.observe(target, config);
     }
@@ -213,7 +205,8 @@ function main(){
 
 function onLoadSetting(result) {
     use_save_button = safeGetValue(result.use_save_button, true);
-    button_size = safeGetValue(result.button_size, 10);
+    //button_size = safeGetValue(result.button_size, 10);
+    document.documentElement.style.setProperty("--button-size", `${safeGetValue(result.button_size, 10)}px`);
     use_filename = safeGetValue(result.use_filename, false);
     
     main();
@@ -225,7 +218,8 @@ function onSettingChanged(changes, areaName) {
     }
 
     use_save_button = safeGetValue(changes.use_save_button.newValue, true);
-    button_size = safeGetValue(changes.button_size.newValue, 10);
+    //button_size = safeGetValue(changes.button_size.newValue, 10);
+    document.documentElement.style.setProperty("--button-size", `${safeGetValue(changes.button_size.newValue, 10)}px`);
     use_filename = safeGetValue(changes.use_filename.newValue, false);
 }
 
@@ -233,5 +227,5 @@ function safeGetValue(value, default_value) {
     return value === undefined ? default_value : value;
 }
 
-browser.storage.local.get().then(onLoadSetting, (err) => {});
+browser.storage.local.get().then(onLoadSetting, (err) => {});   // eslint-disable-line no-unused-vars
 browser.storage.onChanged.addListener(onSettingChanged);
